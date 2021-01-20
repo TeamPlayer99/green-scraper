@@ -23,7 +23,6 @@ namespace scrapy
         static void GetAuctionRows(string url){
             var page = new HtmlWeb();
             HtmlDocument doc = page.Load(url);
-            securities = new List<Security>();
             security = new Security();
 
             var rows = doc.DocumentNode
@@ -39,6 +38,7 @@ namespace scrapy
         static void GetUrls(string url){
             var page = new HtmlWeb();
             HtmlDocument doc = page.Load(url);
+            securities = new List<Security>();
 
             var links = doc.DocumentNode
             .Descendants("div")
@@ -155,8 +155,8 @@ namespace scrapy
                 }
 
                 string fileName = "Securities.xlsx";
-                //string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-                string path = Path.Combine(Environment.CurrentDirectory, fileName);
+                
+                string path = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, fileName);
 
                 if(!File.Exists(path)){
                     FileInfo file = new FileInfo(path);
@@ -167,8 +167,6 @@ namespace scrapy
                     FileInfo file = new FileInfo(path);
                     package.SaveAs(file);
                 }
-
-                
             }
         }
 
